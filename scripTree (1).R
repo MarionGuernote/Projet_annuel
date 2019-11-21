@@ -3,11 +3,7 @@ rm(list = ls(all = TRUE))  # broom variables
 gc()  # garbage collector
 cat("\f")  #clear console
 # LIBRARIES ---------------------------------------------------------------
-<<<<<<< HEAD
-setwd("C:/M1 GPHY/Projet Annuel")
-=======
 setwd("/media/Storage_HDD/Dev.projects/plans/")
->>>>>>> 1f12f982dd740a1281d2afb9b1ef9dfa2260795c
 
 #first format the script, here you can define the max length of line.
 
