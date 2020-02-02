@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-# Version info: R 3.2.3, Biobase 2.30.0, GEOquery 2.40.0 CLEAR & CLEAN -----------------------------------------------------------
-=======
+
 # Version info: R 3.2.3, Biobase 2.30.0, GEOquery 2.40.0 CLEAR & CLEAN
 # -----------------------------------------------------------
->>>>>>> 1f12f982dd740a1281d2afb9b1ef9dfa2260795c
 rm(list = ls(all = TRUE))  # broom variables
 gc()  # garbage collector
 cat("\f")  #clear console
@@ -14,11 +11,11 @@ library(oligo)
 library(GEOquery)
 library(biomaRt)
 
-<<<<<<< HEAD
-setwd("C:/M1 GPHY/Projet Annuel")
-=======
-setwd("/media/Storage_HDD/C3M/RNAseq/projet_cg_hsg/scripts")
->>>>>>> 1f12f982dd740a1281d2afb9b1ef9dfa2260795c
+
+setwd("D:/Ordi/Documents/GitHub/Projet_annuel")
+
+a = 1 + 3
+b <- 4/5
 
 gse = "GSE39591"
 gpl = "GPL6246"

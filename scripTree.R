@@ -3,11 +3,8 @@ rm(list = ls(all = TRUE))  # broom variables
 gc()  # garbage collector
 cat("\f")  #clear console
 # LIBRARIES ---------------------------------------------------------------
-<<<<<<< HEAD
-setwd("C:/M1 GPHY/Projet Annuel")
-=======
-setwd("/media/Storage_HDD/Dev.projects/plans/")
->>>>>>> 1f12f982dd740a1281d2afb9b1ef9dfa2260795c
+  setwd("D:/Ordi/Documents/GitHub/Projet_annuel")
+
 
 #first format the script, here you can define the max length of line.
 
@@ -15,8 +12,8 @@ library(formatR)
 library(RCy3)
 
 
-formatR::tidy_file("./test.R")
-p_dat = parse("./test.R")
+formatR::tidy_file("./final.R")
+p_dat = parse("./final.R")
 
 #parse script
 parsed = getParseData(p_dat)
@@ -115,6 +112,9 @@ v = rbind(v1, v2)
 
 nodes = as.vector(t(v))
 library(RCy3)
+cytoscapePing ()
+cytoscapeVersionInfo ()
+
 nodes = data.frame(id = unique(nodes),col='#ff0000')
 
 edges = data.frame(target = v[, 1], source = v[, 2], attr = v[, 3], interaction = c("interacts"), weight = 1)
@@ -123,4 +123,3 @@ createNetworkFromDataFrames(nodes, edges, title = "my first network", collection
 setEdgeLabelMapping(table.column = "attr",style.name = 'default')
 setEdgeTargetArrowShapeDefault(new.shape = "ARROW")
 # setNodeColorBypass(node.names = paste("input.file",c(1:13),sep='.'),new.colors = '#ff0000')
-
