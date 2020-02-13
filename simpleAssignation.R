@@ -47,10 +47,19 @@ simpleAssignation <- function(script) {
    simpleAssignation = xy.list[tmp_ind][ind_eq]
    xy.list[tmp_ind[ind_eq]] <- NULL
    
+   simpleAssignation = c(simpleAssignation,operationAssign)
+   
+   tabsimpleAssignation = c()
+   for (i in 1:length(operationAssign)){
+      l = length(simpleAssignation[[2]]$text)
+      tabsimpleAssignation = rbin(tabsimpleAssignation,c(simpleAssignation[[i]]$text[c(1:l)]))
+   }
+   
    # test = xy.list[lengths((lapply(xy.list, `[[`, 7))) > 2]
    # test2 = which(lapply(lapply(test, `[[`, 7), `[[`, 2) %in% c("EQ_ASSIGN",'LEFT_ASSIGN'))
    # test = test[test2]
    #tab = lapply(ind_eq, `[[`, 7)
-   # tab2 = lapply(test, `[[`, 9) 
+   # tab2 = lapply(test, `[[`, 9)
+
    
 }
