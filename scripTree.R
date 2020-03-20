@@ -3,7 +3,7 @@ rm(list = ls(all = TRUE))  # broom variables
 gc()  # garbage collector
 cat("\f")  #clear console
 # LIBRARIES ---------------------------------------------------------------
-  setwd("D:/Ordi/Documents/GitHub/Projet_annuel")
+  setwd("D:/Fac/Master1/S2/Projet_annuel")
 
 
 #first format the script, here you can define the max length of line.
@@ -114,6 +114,16 @@ nodes = as.vector(t(v))
 library(RCy3)
 cytoscapePing ()
 cytoscapeVersionInfo ()
+style.name = "myStyle"
+defaults <- list(NODE_SHAPE="ellipse",
+                 NODE_SIZE=30,
+                 EDGE_TRANSPARENCY=120)
+nodeLabels <- mapVisualProperty('node label','id','p')
+arrowShapes <- mapVisualProperty('Edge Target Arrow Shape','interaction','d',c("activates","inhibits","interacts"),c("Arrow","T","None"))
+edgeWidth <- mapVisualProperty('edge width','weight','p')
+
+createVisualStyle(style.name, defaults, list(nodeLabels,arrowShapes,edgeWidth))
+setVisualStyle(style.name)
 
 nodes = data.frame(id = unique(nodes),col='#ff0000')
 

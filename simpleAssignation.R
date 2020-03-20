@@ -78,7 +78,7 @@ simpleAssignation <- function(script) {
    
    
    #assignation of variable with a operation or a direct attribution
-   ind_eq = xy.list[as.logical(lapply(lapply(xy.list, `[[`, 7), `[[`, 1) == "SYMBOL")] #enlève les lignes qui commence pas par un symbol
+   ind_eq = xy.list[as.logical(lapply(lapply(xy.list, `[[`, 7), `[[`, 1) == "SYMBOL")] #enlï¿½ve les lignes qui commence pas par un symbol
    ind_eq = ind_eq[as.logical(lapply(lapply(ind_eq, `[[`, 7), `[[`, 2) %in% c("EQ_ASSIGN",'LEFT_ASSIGN'))]
    operationAssign = ind_eq[as.logical(lapply(lapply(ind_eq, `[[`, 7), `[[`, 3) %in% c("NUM_CONST", "STR_CONST"))]
    tmp_ind = match( operationAssign, xy.list)

@@ -132,8 +132,7 @@ convert_symbols <- function(symbols, HGNC, c = 1) {
         }
         # get corresponding line or NA and store in l1
         if (line == length(HGNC$Previous.symbols)) {
-            if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("-[0-9].*$", gene_to_find, perl = TRUE)) > 
-                0) {
+            if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("-[0-9].*$", gene_to_find, perl = TRUE)) > 0) {
                 gene_to_find <- gsub("-", "", gene_to_find)
                 for (line in seq_along(HGNC$Previous.symbols)) {
                   # split multiple elements
@@ -143,8 +142,7 @@ convert_symbols <- function(symbols, HGNC, c = 1) {
                     break
                   }
                 }
-            } else if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("(-1)$", gene_to_find, perl = TRUE)) > 
-                0) {
+            } else if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("(-1)$", gene_to_find, perl = TRUE)) > 0) {
                 gene_to_find <- strsplit(gene_to_find, "-")[[1]][1]
                 for (line in seq_along(HGNC$Previous.symbols)) {
                   # split multiple elements
@@ -216,8 +214,7 @@ convert_symbols <- function(symbols, HGNC, c = 1) {
         }
         # get corresponding line or NA and store in l2
         if (line == length(HGNC$Synonyms)) {
-            if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("-[0-9].*$", gene_to_find, perl = TRUE)) > 
-                0) {
+            if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("-[0-9].*$", gene_to_find, perl = TRUE)) > 0) {
                 gene_to_find <- gsub("-", "", gene_to_find)
                 for (line in seq_along(HGNC$Synonyms)) {
                   # split multiple elements
@@ -227,8 +224,7 @@ convert_symbols <- function(symbols, HGNC, c = 1) {
                     break
                   }
                 }
-            } else if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("(-1)$", gene_to_find, perl = TRUE)) > 
-                0) {
+            } else if (length(grep("-", gene_to_find, perl = TRUE)) > 0 & length(grep("(-1)$", gene_to_find, perl = TRUE)) > 0) {
                 gene_to_find <- strsplit(gene_to_find, "-")[[1]][1]
                 for (line in seq_along(HGNC$Synonyms)) {
                   # split multiple elements
