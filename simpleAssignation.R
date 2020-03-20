@@ -5,6 +5,10 @@ simpleAssignation <- function(script) {
    library(RCy3)
    library(stringr) 
 
+   rm(list = ls(all = TRUE))  # broom variables
+   gc()  # garbage collector
+   cat("\f")  #clear console
+   
    script = "test.R"
    
    formatR::tidy_file(script)
@@ -18,13 +22,13 @@ simpleAssignation <- function(script) {
    xy.list <- split(parsed, f = parsed$line1)
    
    #search line where functions are not ended
-   # lmax = 0
-   # for (i in 1:length(xy.list)) {
-   #    l = length(xy.list[[i]]$token)
-   #    if (l > lmax){
-   #       lmax =l
-   #    }
-   # }
+   lmax = 0
+   for (i in 1:length(xy.list)) {
+      l = length(xy.list[[i]]$token)
+      if (l > lmax){
+         lmax =l
+      }
+   }
    # 
    # token = c()
    # for (i in 1:length(xy.list)) {
@@ -78,49 +82,28 @@ simpleAssignation <- function(script) {
    ind_eq = ind_eq[as.logical(lapply(lapply(ind_eq, `[[`, 7), `[[`, 2) %in% c("EQ_ASSIGN",'LEFT_ASSIGN'))]
    operationAssign = ind_eq[as.logical(lapply(lapply(ind_eq, `[[`, 7), `[[`, 3) %in% c("NUM_CONST", "STR_CONST"))]
    tmp_ind = match( operationAssign, xy.list)
-   xy.list[tmp_ind] <- NULL
+   xy.list.withoutassi = xy.list
+   xy.list.withoutassi[tmp_ind] <- NULL
    
-   
-   tmp_ind = which(lengths(lapply(xy.list, `[[`, 7)) == 3)
-   ind_eq = which(lapply(lapply(xy.list[tmp_ind], `[[`, 7), `[[`, 2) %in% c("EQ_ASSIGN",'LEFT_ASSIGN'))
-   simpleAssignation = xy.list[tmp_ind][ind_eq]
-   xy.list[tmp_ind[ind_eq]] <- NULL
+   tmp_ind = which(lengths(lapply(xy.list.withoutassi, `[[`, 7)) == 3)
+   ind_eq = which(lapply(lapply(xy.list.withoutassi[tmp_ind], `[[`, 7), `[[`, 2) %in% c("EQ_ASSIGN",'LEFT_ASSIGN'))
+   simpleAssignation = xy.list.withoutassi[tmp_ind][ind_eq]
+   xy.list.withoutassi[tmp_ind[ind_eq]] <- NULL
    
    simpleAssignation = c(simpleAssignation , operationAssign)
    
-   lmax = 0
-   for (i in 1:length(simpleAssignation)) {
-      l = length(simpleAssignation[[i]]$text)
-      if (l > lmax){
-         lmax =l
-      }
-   }
+
    
    tabsimpleAssignation = c()
+   tokentabsimpleAssignation = c()
    for (i in 1:length(simpleAssignation)) {
       tabsimpleAssignation = rbind(tabsimpleAssignation, c( simpleAssignation[[i]]$text[c(1:lmax)] ) )
+      tokentabsimpleAssignation = rbind(tokentabsimpleAssignation, c( simpleAssignation[[i]]$token[c(1:lmax)] ) )
    }
    
    
    
-    # test = xy.list[lengths((lapply(xy.list, `[[`, 7))) ]
-    # test2 = which(lapply(lapply(test, `[[`, 7), `[[`, 2) %in% c("EQ_ASSIGN",'LEFT_ASSIGN'))
-    # test = test[test2]
-    # tab = lapply(ind_eq, `[[`, 7)
-    # tab2 = lapply(test, `[[`, 9) 
-   
-   
-    ###############################################################
-   #if 
-   
-   lmax = 0
-   for (i in 1:length(xy.list)) {
-      l = length(xy.list[[i]]$token)
-      if (l > lmax){
-         lmax =l
-      }
-   }
-   
+
    token = c()
    for (i in 1:length(xy.list)) {
       #l = length(xy.list[[i]]$token)
@@ -131,11 +114,13 @@ simpleAssignation <- function(script) {
    token[is.na(token)] <- 0
    nbop = 0
    nbcl = 0
-   for (i in 1:nrow(token)) {
+   i = 1   
+   while (i < nrow(token)) {
       l = data.frame(token[i,])
-      
+
       if (l[1,] == "IF"){
-         lineif = rbind(lineif, paste(toString(i), "begin", sep= ','))
+         lineif = rbind(lineif, paste(toString(i), "begin", sep= ','))   
+         
          for (n in (i+1):nrow(token)){
             l = data.frame(token[n,])
             
@@ -150,17 +135,23 @@ simpleAssignation <- function(script) {
                break         
             }  
             lineif = rbind(lineif, n)
+            i = n
          }
-         nbop = 0 
-         nbcl = 0
+      nbop = 0 
+      nbcl = 0
       }
-      
-  
+      i = i + 1
    }  
+    
    
-   
-   
-   
+   contentif = c()
+   tokenif = c()
+   for (i in 1:nrow(lineif)){
+      split = strsplit( lineif[i,] , ",")
+      val =  as.integer(split[[1]][1])
+      contentif = rbind(contentif, c( xy.list[[val]]$text[c(1:lmax)]) ) 
+      tokenif = rbind(tokenif, c( xy.list[[val]]$token[c(1:lmax)]) ) 
+   }
    
    
    
