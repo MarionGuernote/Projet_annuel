@@ -12,9 +12,33 @@ library(biomaRt)
 
 
 setwd("D:/Ordi/Documents/GitHub/Projet_annuel")
+a = 1 + 3
+b <- 4/5
+t = 5
+x = 1
+y = 2
+if (t > 10) {
+    x <- 3 + 2
+    y <- 10
+} else if (5 <= t & t < 10) {
+    x <- 3 + 1
+    y <- 5
+} else {
+    x <- x - 1
+    y <- 3
+}
 
-# a = 1 + 3 b <- 4/5 t = 5 x = 1 y = 2 if (t > 10) { x <- 3 + 2 y <- 10 } else if (5 <= t & t < 10) { x <- 3 + 1 y <- 5 } else { x
-# <- x - 1 y <- 3 }
+if (t > 10) {
+    x <- 3 + 2
+    y <- 10
+} else if (5 <= t & t < 10) {
+    x <- 3 + 1
+    y <- 5
+} else {
+    x <- x - 1
+    y <- 3
+}
+
 
 
 gse = "GSE39591"
@@ -90,6 +114,7 @@ for (i in 1:nrow(table_signif)) {
             click = 1
         }
     }
+    
 }
 
 # make dataframe and match symbols
