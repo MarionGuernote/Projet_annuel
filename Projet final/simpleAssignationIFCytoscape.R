@@ -19,10 +19,10 @@ SimpleAssignationIFCy <- function(contentAssignation, tokenAssignation, edges, n
   tableSimpleTokenAsign = as.data.frame(tabTokenAssign)
   tableSimpleTokenAsign = t(na.omit(tableSimpleTokenAsign))
   
-  if (isTRUE (typecontent == "IF")) {
-    tokenValues = c("IF_CONTENT")
-  } else {
+  if (isTRUE (typecontent == "FOR")) {
     tokenValues = c("FOR_CONTENT")
+  } else {
+    tokenValues = c("IF_CONTENT")
   }
   
   simpleAssignValues = rbind(simpleAssignValues,tableSimpleAsign[1],tableSimpleAsign[3], .id= NULL)

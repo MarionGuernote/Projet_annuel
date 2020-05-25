@@ -57,7 +57,7 @@ IfCy <- function(contentIf, tokenIf, edges, nodes, cptif, cptifimb) {
   nodes <- subset(nodes, id != "=")
   nodes <- subset(nodes, id != "<-")
 
-  
+  print(edges)
   inter2 = cbind(token = "CONDITION", value = srce)
   ifAssign <- list("edges" = edges, "nodes" = nodes, "inter" = inter,"ifCondBindValueToken" = inter2)
   return(ifAssign); 

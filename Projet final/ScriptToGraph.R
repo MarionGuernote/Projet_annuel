@@ -1,5 +1,5 @@
 #take the access path of the script to treat 
-simpleAssignation <- function(script) {
+ScriptToGraph <- function(script) {
    
    library(formatR)
    library(RCy3)
@@ -7,10 +7,10 @@ simpleAssignation <- function(script) {
    
    source("SimpleAssignationCytoscape.R")
    source("SimpleAssignationIFCytoscape.R")
-   source("IfCytoscapeV1.R")
+   source("IfCytoscape.R")
    source("ForCytoscape.R")
-   source("FunctionCytoscapeV1.R")
-   source("EquationCytoscapeV1.R")
+   source("FunctionCytoscape.R")
+   source("EquationCytoscape.R")
    source("EquationCytoscapeIF.R")
    
    
@@ -90,7 +90,7 @@ simpleAssignation <- function(script) {
    rank = list()
    rankbis = list()
    #analyze each line and send to the right function to treat
-   for ( i in 0:68){
+   for ( i in 0:nrow(token)){
       
       ############################################### IF
       #search if condition
@@ -220,7 +220,7 @@ simpleAssignation <- function(script) {
          #relie l'assignation simple au if dans lequel elle est traitée
          inter = ifAssign$inter
          if (length(edgesopen) != 0 && nrow(edgesopen) != 0) {
-            inter2 = data.frame(target = edgesopen[nrow(edgesopen),1], attr = edgesopen[nrow(edgesopen),2], source = inter[nrow(inter),1], interaction = c("interacts"), weight = 1)
+            inter2 = data.frame(target = edgesopen[nrow(edgesopen),1], attr = "", source = inter[nrow(inter),1], interaction = c("interacts"), weight = 1)
          } 
          edges = ifAssign$edges
          nodes = ifAssign$nodes
@@ -230,6 +230,7 @@ simpleAssignation <- function(script) {
          
          edgesif = rbind(edgesif,inter)
          edgesopen = rbind(edgesopen,inter)
+         
          inter7 = ifAssign$ifCondBindValueToken
          #Modifie la nature du token par la dernière valeur obtenue
          if (isTRUE(length(bindValueToken) != 0 ) && isTRUE(nrow(bindValueToken) != 0)) {
@@ -380,10 +381,12 @@ simpleAssignation <- function(script) {
          if (tabopen[l,1] == "IF" && length(edgesif) != 0 && nrow(edgesif) != 0){
             m = nrow(edgesif)
             edgesif = edgesif[-m,]
+            edgesopen = edgesopen[-l,]
          }else if (isTRUE(tabopen[l,1] == "ELSE IF") || isTRUE(tabopen[l,1] == "ELSE") && length(edgesif) != 0 && nrow(edgesif) != 0){
             m = nrow(edgesif) 
             if (m-1 > 0){
                edgesif = edgesif[-(m-1),]
+               edgesopen = edgesopen[-(l-1),]
             }else{
                edgesif = edgesif[-m,]
             }
@@ -391,13 +394,16 @@ simpleAssignation <- function(script) {
             m = nrow(edgesif) 
             if (m-1 > 0){
                edgesif = edgesif[-(m-1),]
+               edgesopen = edgesopen[-(l-1),]
             }else{
                edgesif = edgesif[-m,]
             }
+         }else{
+            edgesopen = edgesopen[-l,]
          }
          
          tabopen = tabopen[-l,]
-         edgesopen = edgesopen[-l,]
+         
          
          
          #vérifie si il y a encore des if dans le tableau, si ce n'est pas le cas on réinitialise le compteur des if imbriqué, puisque la présence d'un nouveau if va entrainer une nouvelle imbrication (on va passer de 1.3 à 2.0 )
@@ -473,6 +479,7 @@ simpleAssignation <- function(script) {
                   }
                }
                if (isTRUE(length(rank) != 0 )) {
+                  rank= unique(rank)
                   for (m in length(rank):1) {
                      lign = rank[[m]]
                      bindValueTokenv2 = bindValueToken
@@ -503,6 +510,7 @@ simpleAssignation <- function(script) {
                   }
                }
                if (isTRUE(length(rankbis) != 0 ) ) {
+                  rankbis= unique(rankbis)
                   for (m in length(rankbis):1) {
                      lignbis = rankbis[[m]]
                      bindValueToken = bindValueToken[-lignbis,]
@@ -533,6 +541,7 @@ simpleAssignation <- function(script) {
             edges = equationIf$edges
             nodes = equationIf$nodes
             eqBindValueToken = equationIf$valueToken
+            print(eqBindValueToken)
             
             #Modifie la nature du token par la dernière valeur obtenue
             if (isTRUE(length(bindValueToken) != 0 ) && isTRUE(nrow(bindValueToken) != 0)) {
@@ -544,8 +553,10 @@ simpleAssignation <- function(script) {
                   }
                }
                if (isTRUE(length(rankbis) != 0)  ) {
+                  rankbis= unique(rankbis)
                   for (m in length(rankbis):1) {
                      lignbis = rankbis[[m]]
+
                      bindValueToken = bindValueToken[-lignbis,]
                   }
                }
@@ -574,6 +585,7 @@ simpleAssignation <- function(script) {
                   }
                }
                if (isTRUE(length(rankbis) != 0) ) {
+                  rankbis= unique(rankbis)
                   for (m in length(rankbis):1) {
                      lignbis = rankbis[[m]]
                      bindValueToken = bindValueToken[-lignbis,]

@@ -25,16 +25,16 @@ equationIFCy <- function(contentEquation, tokenEquation, edges, nodes, typeconte
   
   bindValueToken = c()
   
-  if (isTRUE (typecontent == "IF")) {
-    tokenValues = c("IF_CONTENT")
-  } else {
+  if (isTRUE (typecontent == "FOR")) {
     tokenValues = c("FOR_CONTENT")
+  } else {
+    tokenValues = c("IF_CONTENT")
   }
   
   inter <- cbind(tokenValues,targetEq)
   bindValueToken = rbind(bindValueToken, inter)
   
-  inter <- cbind(tokenValues,targetEq)
+  inter <- cbind(tokenValues,sourceEq)
   bindValueToken = rbind(bindValueToken, inter)
   
   eqAssign <- list("edges" = edges, "nodes" = nodes, "valueToken" = bindValueToken)
